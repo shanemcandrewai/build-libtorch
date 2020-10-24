@@ -29,8 +29,8 @@ This CMakeLists.txt manages the building of a minimal libtorch from [PyTorch 1.6
 #### Cmake options
 ##### RESET
 Restores and cleans the PyTorch source working tree from HEAD. This can be enabled by passing the option `-D RESET=1`.
-###### NO_BUILD_SHARED_LIBS (dependent on RESET)
-The build generates a shared library by default. This can be disabled by passing the option `-D RESET=1 -D NO_BUILD_SHARED_LIBS=1`.
+##### NO_BUILD_SHARED_LIBS
+The build generates a shared library by default. This can be disabled by passing the option `-D NO_BUILD_SHARED_LIBS=1`.
 ##### CMAKE_BUILD_TYPE 
 The default buid type is `Release`. For a debug build pass option `-D CMAKE_BUILD_TYPE=Debug`
 ##### CMAKE_CXX_FLAGS
