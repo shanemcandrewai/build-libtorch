@@ -4,7 +4,7 @@ project(build_libtorch)
 
 set(PYTORCH_SRC_DIR ../pytorch)
 
-option(RESET "Restore and modify PyTorch source tree")
+option(RESET "Restores and cleans the PyTorch source working tree from HEAD")
 option(NO_BUILD_SHARED_LIBS "Do not build shared libraries")
 option(USE_STATIC_DISPATCH "Use static dispatch for ATen operators")
 set(ENV{DEBUG} 1) #will enable debug builds (-g -O0)
@@ -22,9 +22,10 @@ set(ENV{BUILD_CAFFE2_OPS} 0) #Build Caffe2 operators
 if(RESET)
   find_package(Git)
   if(Git_FOUND)
-    execute_process(COMMAND ${GIT_EXECUTABLE} restore :/ WORKING_DIRECTORY ${PYTORCH_SRC_DIR} RESULT_VARIABLE RESULTV OUTPUT_VARIABLE OUTPUTV ERROR_VARIABLE ERRORV)
-    execute_process(COMMAND ${GIT_EXECUTABLE} clean -df WORKING_DIRECTORY ${PYTORCH_SRC_DIR} RESULT_VARIABLE RESULTV OUTPUT_VARIABLE OUTPUTV ERROR_VARIABLE ERRORV)
+    execute_process(COMMAND ${GIT_EXECUTABLE} restore :/ WORKING_DIRECTORY ${PYTORCH_SRC_DIR})
+    execute_process(COMMAND ${GIT_EXECUTABLE} clean -dxf WORKING_DIRECTORY ${PYTORCH_SRC_DIR})
   endif()
+  unset(RESET CACHE)
 endif()
 
 file(READ ${PYTORCH_SRC_DIR}/CMakeLists.txt FILE_CONTENTS)
