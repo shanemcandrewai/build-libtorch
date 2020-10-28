@@ -25,6 +25,15 @@ if(RESET)
     execute_process(COMMAND ${GIT_EXECUTABLE} restore :/ WORKING_DIRECTORY ${PYTORCH_SRC_DIR})
     execute_process(COMMAND ${GIT_EXECUTABLE} clean -dxf WORKING_DIRECTORY ${PYTORCH_SRC_DIR})
   endif()
+
+  file(READ ${PYTORCH_SRC_DIR}/aten/src/ATen/gen.py FILE_CONTENTS)
+  string(REPLACE "def generate_outputs():" "def generate_outputs():\n    breakpoint()" FILE_CONTENTS "${FILE_CONTENTS}")
+  file(WRITE ${PYTORCH_SRC_DIR}/aten/src/ATen/gen.py "${FILE_CONTENTS}")
+
+  file(READ ${PYTORCH_SRC_DIR}/cmake/Codegen.cmake FILE_CONTENTS)
+  string(REPLACE "def generate_outputs():" "def generate_outputs():\n    breakpoint()" FILE_CONTENTS "${FILE_CONTENTS}")
+  file(WRITE ${PYTORCH_SRC_DIR}/cmake/Codegen.cmake "${FILE_CONTENTS}")
+
   unset(RESET CACHE)
 endif()
 
